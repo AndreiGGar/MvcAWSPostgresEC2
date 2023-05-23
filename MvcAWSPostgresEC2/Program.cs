@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using MvcAWSPostgresEC2.Context;
+using MvcAWSPostgresEC2.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+string connectionString = builder.Configuration.GetConnectionString("Postgres");
+builder.Services.AddTransient<RepositoryDepartamentos>();
+builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
